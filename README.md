@@ -1,6 +1,6 @@
-xray
+#xray
 
-介绍
+##介绍
 
 xray-wp.sh
 
@@ -15,8 +15,6 @@ xray安装脚本，适用于centos7
 先更新
 ```bash
 yum install epel-release -y
-```
-```bash
 yum update -y
 ```
 再执行

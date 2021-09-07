@@ -13,11 +13,13 @@ xray安装脚本，适用于centos7
 回落使用nginx，配置wordpress
 
 先更新
-
+```bash
 yum install epel-release -y
-
+```
+```bash
 yum update -y
-
+```
 再执行
-
+```bash
 bash <(curl -Ls https://raw.githubusercontent.com/lauboom/xray/main/xray-wp.sh)
+```

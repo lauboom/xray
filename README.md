@@ -1,9 +1,5 @@
-#xray
-
-##介绍
-
-xray-wp.sh
-
+# xray
+## 介绍
 xray安装脚本，适用于centos7
 
 调用xray官方安装脚本

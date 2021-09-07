@@ -453,6 +453,7 @@ EOF
     systemctl enable xray.service
     sed -i "s/User=nobody/User=root/;" /etc/systemd/system/xray.service
     systemctl daemon-reload
+    ~/.acme.sh/acme.sh --register-account -m lytommy@live.com
     ~/.acme.sh/acme.sh  --installcert  -d  $your_domain   \
         --key-file   /usr/local/etc/xray/cert/private.key \
         --fullchain-file  /usr/local/etc/xray/cert/fullchain.cer \

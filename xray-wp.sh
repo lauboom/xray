@@ -24,7 +24,7 @@ sleep 2s
 
 install_wordpress(){
     green "$(date +"%Y-%m-%d %H:%M:%S") ==== 安装wordpress"
-    yum install -y iptables-services
+    apt install -y iptables-services
     systemctl start iptables
     systemctl enable iptables
     iptables -F
@@ -48,7 +48,7 @@ install_wordpress(){
     echo
     echo
     sleep 1
-    yum -y install  wget
+    apt -y install  wget
     mkdir /usr/share/wordpresstemp
     cd /usr/share/wordpresstemp/
     wget https://cn.wordpress.org/latest-zh_CN.zip
@@ -75,18 +75,18 @@ install_wordpress(){
         exit 1
     fi
     rpm -ivh remi-release-7.rpm epel-release-latest-7.noarch.rpm --force --nodeps
-    #sed -i "0,/enabled=0/s//enabled=1/" /etc/yum.repos.d/epel.repo
-    yum -y install unzip vim tcl expect curl socat
+    #sed -i "0,/enabled=0/s//enabled=1/" /etc/apt.repos.d/epel.repo
+    apt -y install unzip vim tcl expect curl socat
     echo
     echo
     green "============"
     green "2.安装PHP7.4"
     green "============"
     sleep 1
-    yum -y install php74 php74-php-gd php74-php-opcache php74-php-pdo php74-php-mbstring php74-php-cli php74-php-fpm php74-php-mysqlnd php74-php-xml
+    apt -y install php74 php74-php-gd php74-php-opcache php74-php-pdo php74-php-mbstring php74-php-cli php74-php-fpm php74-php-mysqlnd php74-php-xml
     service php74-php-fpm start
     chkconfig php74-php-fpm on
-    if [ `yum list installed | grep php74 | wc -l` -ne 0 ]; then
+    if [ `apt list installed | grep php74 | wc -l` -ne 0 ]; then
         echo
         green "【checked】 PHP7安装成功"
         echo
@@ -101,10 +101,10 @@ install_wordpress(){
     #wget http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm
     wget https://repo.mysql.com/mysql80-community-release-el7-3.noarch.rpm
     rpm -ivh mysql80-community-release-el7-3.noarch.rpm --force --nodeps
-    yum -y install mysql-server
+    apt -y install mysql-server
     systemctl enable mysqld.service
     systemctl start  mysqld.service
-    if [ `yum list installed | grep mysql-community | wc -l` -ne 0 ]; then
+    if [ `apt list installed | grep mysql-community | wc -l` -ne 0 ]; then
         green "【checked】 MySQL安装成功"
         echo
         echo
@@ -189,8 +189,8 @@ EOT
 check_release(){
     green "$(date +"%Y-%m-%d %H:%M:%S") ==== 检查系统版本"
     if [ "$RELEASE" == "centos" ]; then
-        yum install -y wget
-        systemPackage="yum"
+        apt install -y wget
+        systemPackage="apt"
         if  [ "$VERSION" == "6" ] ;then
             red "$(date +"%Y-%m-%d %H:%M:%S") - 暂不支持CentOS 6.\n== Install failed."
             exit
@@ -230,8 +230,8 @@ check_release(){
         done
         rpm -ivh nginx-release-centos-7-0.el7.ngx.noarch.rpm --force --nodeps
         #green "Prepare to install nginx."
-        #yum install -y libtool perl-core zlib-devel gcc pcre* >/dev/null 2>&1
-        yum install -y epel-release
+        #apt install -y libtool perl-core zlib-devel gcc pcre* >/dev/null 2>&1
+        apt install -y epel-release
     else
         red "$(date +"%Y-%m-%d %H:%M:%S") - 当前系统不被支持. \n== Install failed."
         exit
@@ -506,7 +506,7 @@ remove_xray(){
     systemctl stop nginx
     systemctl disable nginx
     if [ "$RELEASE" == "centos" ]; then
-        yum remove -y nginx
+        apt remove -y nginx
     else
         apt-get -y autoremove nginx
         apt-get -y --purge remove nginx
@@ -519,7 +519,7 @@ remove_xray(){
     rm -rf /etc/nginx
     rm -rf /usr/share/nginx/html/*
     rm -rf /root/.acme.sh/
-    yum remove -y php74 php74-php-gd  php74-php-pdo php74-php-opcache php74-php-mbstring php74-php-cli php74-php-fpm php74-php-mysqlnd mysql
+    apt remove -y php74 php74-php-gd  php74-php-pdo php74-php-opcache php74-php-mbstring php74-php-cli php74-php-fpm php74-php-mysqlnd mysql
     rm -rf /var/lib/mysql
     rm -rf /usr/lib64/mysql
     rm -rf /usr/share/mysql

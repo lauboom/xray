@@ -506,12 +506,16 @@ remove_all_domains()
     mkdir "${nginx_prefix}/certs"
     $HOME/.acme.sh/acme.sh --uninstall
     rm -rf $HOME/.acme.sh
-    curl https://get.acme.sh | sh -s email=my@example.com
-    $HOME/.acme.sh/acme.sh --upgrade --auto-upgrade
-    unset domain_list
-    unset true_domain_list
-    unset domain_config_list
-    unset pretend_list
+    curl https://get.acme.sh | sh
+    ~/.acme.sh/acme.sh --register-account -m my@example.com
+    ~/.acme.sh/acme.sh --issue -d $your_domain -w /var/www/acme-challenge >/dev/null
+    ~/.acme.sh/acme.sh --installcert -d $your_domain \
+       --key-file /etc/letsencrypt/live/private.key \
+       --fullchain-file /etc/letsencrypt/live/certificate.crt
+    ~/.acme.sh/acme.sh  --upgrade  --auto-upgrade
+    chown -R acme:certusers /etc/letsencrypt/live
+    chmod -R 750 /etc/letsencrypt/live
+EOF
 }
 
 check_base_command

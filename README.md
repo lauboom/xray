@@ -15,5 +15,5 @@ yum update -y
 ```
 再执行
 ```bash
-bash <(curl -Ls https://raw.githubusercontent.com/lauboom/xray/main/xray-wp.sh?token=AMNIYDA7NEL27MVZFQUOZC3BG5CLM)
+bash <(curl -Ls https://raw.githubusercontent.com/lauboom/xray/main/xray-wp.sh)
 ```

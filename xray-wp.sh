@@ -305,6 +305,7 @@ EOF
     systemctl restart nginx.service
     green "$(date +"%Y-%m-%d %H:%M:%S") - 使用acme.sh申请https证书."
     curl https://get.acme.sh | sh
+    ~/.acme.sh/acme.sh --register-account -m lytommy@live.com
     ~/.acme.sh/acme.sh  --issue  -d $your_domain  --webroot /usr/share/nginx/html/
     if test -s /root/.acme.sh/$your_domain/fullchain.cer; then
         green "$(date +"%Y-%m-%d %H:%M:%S") - 申请https证书成功."
@@ -452,8 +453,7 @@ EOF
     fi
     systemctl enable xray.service
     sed -i "s/User=nobody/User=root/;" /etc/systemd/system/xray.service
-    systemctl daemon-reload
-    ~/.acme.sh/acme.sh --register-account -m my@example.com 
+    systemctl daemon-reload 
     ~/.acme.sh/acme.sh  --installcert  -d  $your_domain   \
         --key-file   /usr/local/etc/xray/cert/private.key \
         --fullchain-file  /usr/local/etc/xray/cert/fullchain.cer \
